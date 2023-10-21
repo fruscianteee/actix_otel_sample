@@ -1,0 +1,21 @@
+<thead>
+  <tr>
+    <th>Todo</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+  {% for todo in todos %}
+    <tr id="todo-{{ todo.id }}">
+      <td>
+        {% match todo.text %}
+        {% when Some with(v) %}{{ v }}
+        {% when None %}
+        {% endmatch %}
+      </td>
+      <td>
+        <button class="delete" hx-post="/api/del/{{ todo.id }}" hx-target="#todo-{{ todo.id }}" hx-swap="outerHTML"></button>
+      </td>
+    </tr>
+  {% endfor %}
+</tbody>

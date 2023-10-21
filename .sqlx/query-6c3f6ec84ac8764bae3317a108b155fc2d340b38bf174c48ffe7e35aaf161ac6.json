@@ -1,0 +1,14 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "insert into todo (text) values ($1)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Varchar"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "6c3f6ec84ac8764bae3317a108b155fc2d340b38bf174c48ffe7e35aaf161ac6"
+}

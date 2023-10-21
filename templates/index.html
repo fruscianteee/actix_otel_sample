@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <form hx-post="/api/add" hx-swap="innerHTML" hx-target="#target">
+      <div class="columns m-3">
+        <div class="column is-two-fifths">
+          <input class="input is-primary" type="text" name="text" required />
+        </div>
+        <div class="column">
+          <button class="button is-info is-outlined" type="submit">add todo</button>
+        </div>
+      </div>
+    </form>
+    <div class="p-5">
+      <table class="table is-striped is-narrow is-hoverable" id="target" hx-get="/table" hx-trigger="load"></table>
+    </div>
+  </body>
+</html>
