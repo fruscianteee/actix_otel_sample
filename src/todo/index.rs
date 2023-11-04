@@ -1,3 +1,5 @@
+use tracing::{info, instrument};
+
 #[derive(askama::Template)]
 #[template(path = "index.html")]
 pub struct TodoPage;
@@ -8,6 +10,7 @@ pub struct FormData {
 }
 
 impl FormData {
+    #[instrument]
     pub async fn add(
         self,
         db: &actix_web::web::Data<sqlx::Pool<sqlx::Postgres>>,
@@ -18,6 +21,7 @@ impl FormData {
             .await?;
 
         tx.commit().await?;
+        info!("create todo!");
         Ok(())
     }
 }

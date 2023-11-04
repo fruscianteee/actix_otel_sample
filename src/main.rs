@@ -1,6 +1,7 @@
 use actix_otel_sample::scoped_config;
 use actix_web::{web::Data, App, HttpServer};
 use tracing::info;
+use tracing_actix_web::TracingLogger;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -13,9 +14,10 @@ async fn main() -> std::io::Result<()> {
             .await
             .expect("データベースに接続できませんでした"),
     );
-
+    info!("start server.");
     HttpServer::new(move || {
         App::new()
+            .wrap(TracingLogger::default())
             .configure(scoped_config)
             .app_data(postgres.clone())
     })

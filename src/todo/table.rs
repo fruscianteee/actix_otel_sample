@@ -1,3 +1,5 @@
+use tracing::{info, instrument};
+
 #[derive(askama::Template, Debug, Default)]
 #[template(path = "table.html")]
 pub struct TodoTable {
@@ -12,18 +14,18 @@ pub struct Todo {
 }
 
 impl Todo {
+    #[instrument]
     pub async fn get_table(
         db: &actix_web::web::Data<sqlx::Pool<sqlx::Postgres>>,
     ) -> anyhow::Result<Vec<Self>> {
-        let mut tx = db.begin().await.expect("transaction error.");
         let result = sqlx::query_as!(Todo, "select * from todo")
-            .fetch_all(tx.as_mut()) // <-- here
+            .fetch_all(db.as_ref()) // <-- here
             .await
             .unwrap();
-        dbg!(&result);
         Ok(result)
     }
 
+    #[instrument]
     pub async fn del(
         target: i32,
         db: actix_web::web::Data<sqlx::Pool<sqlx::Postgres>>,
@@ -34,6 +36,7 @@ impl Todo {
             .await?;
 
         tx.commit().await?;
+        info!("delete todo!");
         Ok(())
     }
 }
