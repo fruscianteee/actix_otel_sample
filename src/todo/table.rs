@@ -14,7 +14,7 @@ pub struct Todo {
 }
 
 impl Todo {
-    #[instrument]
+    #[instrument(skip_all)]
     pub async fn get_table(
         db: &actix_web::web::Data<sqlx::Pool<sqlx::Postgres>>,
     ) -> anyhow::Result<Vec<Self>> {
@@ -25,7 +25,7 @@ impl Todo {
         Ok(result)
     }
 
-    #[instrument]
+    #[instrument(skip_all)]
     pub async fn del(
         target: i32,
         db: actix_web::web::Data<sqlx::Pool<sqlx::Postgres>>,

@@ -36,6 +36,37 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - 16686:16686 # UI
+      - 6831:6831 # Collector endpoint
+      - 14286:14268
+      - 6832:6832
+
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   volumes:
+  #     - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  #   command:
+  #     - '--config.file=/etc/prometheus/prometheus.yml'
+  #   ports:
+  #     - 9090:9090
+
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   ports:
+  #     - 3000:3000
+
+  # otel-collector:
+  #   image: otel/opentelemetry-collector:latest
+  #   volumes:
+  #     - ./otel-collector-config.yml:/etc/otel-collector-config.yml
+  #   command: ["--config=/etc/otel-collector-config.yml"]
+  #   ports:
+  #     - 55680:55680 # OpenTelemetry default port
+
 volumes:
   db-data:
 secrets:

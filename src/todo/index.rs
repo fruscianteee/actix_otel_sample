@@ -10,7 +10,7 @@ pub struct FormData {
 }
 
 impl FormData {
-    #[instrument]
+    #[instrument(skip_all)]
     pub async fn add(
         self,
         db: &actix_web::web::Data<sqlx::Pool<sqlx::Postgres>>,

@@ -1,13 +1,16 @@
 mod index;
 mod table;
 use actix_web::{get, post, web, HttpResponse, Responder};
+use tracing::instrument;
 
 #[get("/")]
+#[instrument(skip_all)]
 async fn todo_page() -> impl Responder {
     index::TodoPage {}
 }
 
 #[get("/table")]
+#[instrument(skip_all)]
 async fn todo_table(db: web::Data<sqlx::Pool<sqlx::Postgres>>) -> impl Responder {
     match table::Todo::get_table(&db).await {
         Ok(v) => HttpResponse::Ok().body(table::TodoTable { todos: v }.to_string()),
@@ -16,6 +19,7 @@ async fn todo_table(db: web::Data<sqlx::Pool<sqlx::Postgres>>) -> impl Responder
 }
 
 #[post("/api/add")]
+#[instrument(skip_all)]
 async fn add(
     form: web::Form<index::FormData>,
     db: web::Data<sqlx::Pool<sqlx::Postgres>>,
@@ -30,6 +34,7 @@ async fn add(
 }
 
 #[post("/api/del/{id}")]
+#[instrument(skip_all)]
 async fn del(path: web::Path<i32>, db: web::Data<sqlx::Pool<sqlx::Postgres>>) -> impl Responder {
     let id = path.into_inner();
     match table::Todo::del(id, db).await {

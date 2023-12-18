@@ -7,7 +7,7 @@
 ################################################################################
 # Create a stage for building the application.
 
-ARG RUST_VERSION=1.73.0
+ARG RUST_VERSION=1.74.1
 ARG APP_NAME=actix_otel_sample
 FROM rust:${RUST_VERSION}-slim-bullseye AS build
 ARG APP_NAME
