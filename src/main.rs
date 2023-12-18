@@ -6,7 +6,7 @@ use tracing_actix_web::TracingLogger;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 fn init_telemetry() {
-    let app_name = "tracing-actix-web-demo";
+    let app_name = "actix_otel_sample";
 
     global::set_text_map_propagator(opentelemetry_jaeger::Propagator::new());
     let tracer = opentelemetry_jaeger::new_agent_pipeline()
