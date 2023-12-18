@@ -6,6 +6,20 @@
 docker compose watch
 ```
 
+# 確認
+
+## webサイト
+
+```
+http://localhost:8080/
+```
+
+## jaeger
+
+```
+http://localhost:16686/
+```
+
 # db関連
 
 sqlxマクロ用のファイル作成
