@@ -41,9 +41,7 @@ services:
     image: jaegertracing/all-in-one:latest
     ports:
       - 16686:16686 # UI
-      - 6831:6831 # Collector endpoint
-      - 14286:14268
-      - 6832:6832
+      - 4317:4317
 
   # prometheus:
   #   image: prom/prometheus:latest

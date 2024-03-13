@@ -1,6 +1,8 @@
 use actix_otel_sample::scoped_config;
 use actix_web::{web::Data, App, HttpServer};
-use opentelemetry::global;
+use opentelemetry::{global, KeyValue};
+use opentelemetry_otlp::WithExportConfig;
+use opentelemetry_sdk::{runtime, trace, Resource};
 use tracing::info;
 use tracing_actix_web::TracingLogger;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
@@ -8,14 +10,21 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 fn init_telemetry() {
     let app_name = "actix_otel_sample";
 
-    global::set_text_map_propagator(opentelemetry_jaeger::Propagator::new());
-    let tracer = opentelemetry_jaeger::new_agent_pipeline()
-        .with_endpoint("jaeger:6831")
-        .with_service_name(app_name)
-        .install_batch(opentelemetry_sdk::runtime::Tokio)
+    let tracer = opentelemetry_otlp::new_pipeline()
+        .tracing()
+        .with_exporter(
+            opentelemetry_otlp::new_exporter()
+                .tonic()
+                .with_endpoint("http://jaeger:4317"),
+        )
+        .with_trace_config(trace::config().with_resource(Resource::new(vec![
+            opentelemetry::KeyValue::new("service.name", app_name),
+        ])))
+        .install_batch(runtime::TokioCurrentThread)
         .expect("Failed to install OpenTelemetry tracer.");
 
     let telemetry = tracing_opentelemetry::layer().with_tracer(tracer);
+
     tracing_subscriber::registry()
         .with(
             tracing_subscriber::EnvFilter::try_from_default_env()
