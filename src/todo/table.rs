@@ -7,6 +7,7 @@ pub struct TodoTable {
 }
 
 #[derive(Debug, Default)]
+#[allow(dead_code)]
 pub struct Todo {
     pub id: i32,
     pub text: Option<String>,

@@ -3,7 +3,8 @@
 # 起動
 
 ```bash
-docker compose watch
+# docker compose watch
+docker compose up
 ```
 
 # 確認
@@ -14,10 +15,12 @@ docker compose watch
 http://localhost:8080/
 ```
 
-## jaeger
+## ツール
 
 ```
 http://localhost:16686/
+http://localhost:9090/
+http://localhost:9411/
 ```
 
 # db関連

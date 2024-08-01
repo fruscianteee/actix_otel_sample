@@ -7,26 +7,26 @@ edition = "2021"
 
 [dependencies]
 
-actix-web = "4.5.1"
-anyhow = "1.0.81"
+actix-web = "4.8.0"
+anyhow = "1.0.86"
 askama = "0.12.1"
 askama_actix = "0.14.0"
-chrono = "0.4.35"
+chrono = "0.4.38"
 dotenvy = "0.15.7"
-opentelemetry = "0.22.0"
-opentelemetry_sdk = { version = "0.22.1", features = [
+opentelemetry = "0.23.0"
+opentelemetry_sdk = { version = "0.23.0", features = [
     "rt-tokio-current-thread",
 ] }
-opentelemetry-otlp = { version = "0.15.0" }
-serde = "1.0.197"
-sqlx = { version = "0.7.4", features = [
+opentelemetry-otlp = { version = "0.16.0" }
+serde = "1.0.204"
+sqlx = { version = "0.8.0", features = [
     "runtime-tokio",
     "postgres",
     "macros",
     "chrono",
 ] }
-opentelemetry-semantic-conventions = "0.14.0"
+opentelemetry-semantic-conventions = "0.16.0"
 tracing = "0.1.40"
-tracing-actix-web = "0.7.10"
-tracing-opentelemetry = "0.23.0"
+tracing-actix-web = "0.7.11"
+tracing-opentelemetry = "0.24.0"
 tracing-subscriber = { version = "0.3.18", features = ["env-filter", "json"] }

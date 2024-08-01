@@ -1,6 +1,6 @@
 use actix_otel_sample::scoped_config;
 use actix_web::{web::Data, App, HttpServer};
-use opentelemetry::{global, KeyValue};
+use opentelemetry::global;
 use opentelemetry_otlp::WithExportConfig;
 use opentelemetry_sdk::{runtime, trace, Resource};
 use tracing::info;
@@ -15,7 +15,7 @@ fn init_telemetry() {
         .with_exporter(
             opentelemetry_otlp::new_exporter()
                 .tonic()
-                .with_endpoint("http://jaeger:4317"),
+                .with_endpoint("http://localhost:4317"),
         )
         .with_trace_config(trace::config().with_resource(Resource::new(vec![
             opentelemetry::KeyValue::new("service.name", app_name),
@@ -63,7 +63,7 @@ async fn main() -> std::io::Result<()> {
             .configure(scoped_config)
             .app_data(postgres.clone())
     })
-    .bind(("0.0.0.0", 8080))?
+    .bind(("127.0.0.1", 8080))?
     .run()
     .await?;
 
